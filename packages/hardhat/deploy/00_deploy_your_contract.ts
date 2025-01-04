@@ -1,44 +1,82 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { Contract } from "ethers";
 
 /**
- * Deploys a contract named "YourContract" using the deployer account and
- * constructor arguments set to the deployer address
+ * Deploys the RWAOracle contract using the deployer account.
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  /*
-    On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
+// const deployRWAOracle: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+//   const { deployer } = await hre.getNamedAccounts();
+//   const { deploy } = hre.deployments;
 
-    When deploying to live networks (e.g `yarn deploy --network sepolia`), the deployer account
-    should have sufficient balance to pay for the gas fees for contract creation.
+//   // Deploy RWAOracle
+//   const rwaOracle = await deploy("RWAOracle", {
+//     from: deployer,
+//     args: [], // Add any required constructor arguments here
+//     log: true,
+//     autoMine: true,
+//   });
 
-    You can generate a random account with `yarn generate` which will fill DEPLOYER_PRIVATE_KEY
-    with a random private key in the .env file (then used on hardhat.config.ts)
-    You can run the `yarn account` command to check your balance in every network.
-  */
+//   console.log("✅ RWAOracle deployed at:", rwaOracle.address);
+// };
+
+// export default deployRWAOracle;
+
+// // Tags are useful if you have multiple deploy files and only want to run one of them.
+// // e.g., yarn deploy --tags RWAOracle
+// deployRWAOracle.tags = ["RWAOracle"];
+
+// const deployMockRWAToken: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+//   const { deployer } = await hre.getNamedAccounts();
+//   const { deploy } = hre.deployments;
+
+//   // Deploy MockRWAToken
+//   const MockRWAToken = await deploy("MockRWAToken", {
+//     from: deployer,
+//     args: ["MockRWA", "MRWA"], // Add constructor arguments if needed
+//     log: true,
+//     autoMine: true,
+//   });
+
+//   console.log("✅ MockRWAToken deployed at:", MockRWAToken.address);
+// };
+
+// export default deployMockRWAToken;
+
+// deployMockRWAToken.tags = ["MockRWAToken"];
+
+
+/**
+ * Deploys the LendingPool contract using the deployer account.
+ * 
+ * @param hre HardhatRuntimeEnvironment object.
+ */
+const deployLendingPool: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy } = hre.deployments;
+  const { deploy, get } = hre.deployments;
 
-  await deploy("YourContract", {
+  // Fetch the deployed RWAOracle contract
+  // const rwaOracleDeployment = await get("RWAOracle");
+  const rwaOracleAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
+
+  // Deploy LendingPool with the RWAOracle address
+  const lendingPoolDeployment = await deploy("LendingPool", {
     from: deployer,
-    // Contract constructor arguments
-    args: [deployer],
+    args: [rwaOracleAddress], // Constructor argument: RWAOracle address
     log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
-  // Get the deployed contract to interact with it after deploying.
-  const yourContract = await hre.ethers.getContract<Contract>("YourContract", deployer);
-  console.log("👋 Initial greeting:", await yourContract.greeting());
+  console.log("✅ LendingPool deployed at:", lendingPoolDeployment.address);
+
+  // // Optional: Get and log the LendingPool contract's initial state
+  // const lendingPoolContract = await hre.ethers.getContract<Contract>("LendingPool", deployer);
+  // console.log("📦 LendingPool admin address:", await lendingPoolContract.admin());
 };
 
-export default deployYourContract;
+export default deployLendingPool;
 
-// Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+// Tag for selective deployment
+deployLendingPool.tags = ["LendingPool"];
+
