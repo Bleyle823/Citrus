@@ -1,3 +1,4 @@
+import { AllowedChainIds } from "./networks";
 import { MutateOptions } from "@tanstack/react-query";
 import {
   Abi,
@@ -21,7 +22,7 @@ import {
   TransactionReceipt,
   WriteContractErrorType,
 } from "viem";
-import { Config, UseReadContractParameters, UseWatchContractEventParameters } from "wagmi";
+import { Config, UseReadContractParameters, UseWatchContractEventParameters, UseWriteContractParameters } from "wagmi";
 import { WriteContractParameters, WriteContractReturnType } from "wagmi/actions";
 import { WriteContractVariables } from "wagmi/query";
 import deployedContractsData from "~~/contracts/deployedContracts";
@@ -131,13 +132,13 @@ export type WriteAbiStateMutability = "nonpayable" | "payable";
 
 export type FunctionNamesWithInputs<
   TContractName extends ContractName,
-  TAbiStateMutibility extends AbiStateMutability = AbiStateMutability,
+  TAbiStateMutability extends AbiStateMutability = AbiStateMutability,
 > = Exclude<
   Extract<
     ContractAbi<TContractName>[number],
     {
       type: "function";
-      stateMutability: TAbiStateMutibility;
+      stateMutability: TAbiStateMutability;
     }
   >,
   {
@@ -149,7 +150,7 @@ type Expand<T> = T extends object ? (T extends infer O ? { [K in keyof O]: O[K] 
 
 type UnionToIntersection<U> = Expand<(U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never>;
 
-type OptionalTupple<T> = T extends readonly [infer H, ...infer R] ? readonly [H | undefined, ...OptionalTupple<R>] : T;
+type OptionalTuple<T> = T extends readonly [infer H, ...infer R] ? readonly [H | undefined, ...OptionalTuple<R>] : T;
 
 type UseScaffoldArgsParam<
   TContractName extends ContractName,
@@ -157,7 +158,7 @@ type UseScaffoldArgsParam<
 > =
   TFunctionName extends FunctionNamesWithInputs<TContractName>
     ? {
-        args: OptionalTupple<UnionToIntersection<AbiFunctionArguments<ContractAbi<TContractName>, TFunctionName>>>;
+        args: OptionalTuple<UnionToIntersection<AbiFunctionArguments<ContractAbi<TContractName>, TFunctionName>>>;
         value?: ExtractAbiFunction<ContractAbi<TContractName>, TFunctionName>["stateMutability"] extends "payable"
           ? bigint | undefined
           : undefined;
@@ -166,11 +167,23 @@ type UseScaffoldArgsParam<
         args?: never;
       };
 
+export type UseDeployedContractConfig<TContractName extends ContractName> = {
+  contractName: TContractName;
+  chainId?: AllowedChainIds;
+};
+
+export type UseScaffoldWriteConfig<TContractName extends ContractName> = {
+  contractName: TContractName;
+  chainId?: AllowedChainIds;
+  writeContractParams?: UseWriteContractParameters;
+};
+
 export type UseScaffoldReadConfig<
   TContractName extends ContractName,
   TFunctionName extends ExtractAbiFunctionNames<ContractAbi<TContractName>, ReadAbiStateMutability>,
 > = {
   contractName: TContractName;
+  chainId?: AllowedChainIds;
   watch?: boolean;
 } & IsContractDeclarationMissing<
   Partial<UseReadContractParameters>,
@@ -216,6 +229,7 @@ export type UseScaffoldEventConfig<
 > = {
   contractName: TContractName;
   eventName: TEventName;
+  chainId?: AllowedChainIds;
 } & IsContractDeclarationMissing<
   Omit<UseWatchContractEventParameters, "onLogs" | "address" | "abi" | "eventName"> & {
     onLogs: (
@@ -275,6 +289,7 @@ export type UseScaffoldEventHistoryConfig<
   contractName: TContractName;
   eventName: IsContractDeclarationMissing<string, TEventName>;
   fromBlock: bigint;
+  chainId?: AllowedChainIds;
   filters?: EventFilters<TContractName, TEventName>;
   blockData?: TBlockData;
   transactionData?: TTransactionData;
@@ -297,7 +312,6 @@ export type UseScaffoldEventHistoryData<
   | IsContractDeclarationMissing<
       any[],
       {
-        log: Log<bigint, number, false, TEvent, false, [TEvent], TEventName>;
         args: AbiParametersToPrimitiveTypes<TEvent["inputs"]> &
           GetEventArgs<
             ContractAbi<TContractName>,
@@ -306,10 +320,10 @@ export type UseScaffoldEventHistoryData<
               IndexedOnly: false;
             }
           >;
-        block: TBlockData extends true ? Block<bigint, true> : null;
-        receipt: TReceiptData extends true ? GetTransactionReturnType : null;
-        transaction: TTransactionData extends true ? GetTransactionReceiptReturnType : null;
-      }[]
+        blockData: TBlockData extends true ? Block<bigint, true> : null;
+        receiptData: TReceiptData extends true ? GetTransactionReturnType : null;
+        transactionData: TTransactionData extends true ? GetTransactionReceiptReturnType : null;
+      } & Log<bigint, number, false, TEvent, false, [TEvent], TEventName>[]
     >
   | undefined;
 
