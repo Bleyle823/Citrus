@@ -1,17 +1,11 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
-import {
-  BaseFaucetsButton,
-  FaucetButton,
-  RainbowKitCustomConnectButton,
-  SuperchainFaucetButton,
-} from "~~/components/scaffold-eth";
+import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
 type HeaderMenuLink = {
@@ -96,10 +90,10 @@ export const Header = () => {
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-10 h-10">
-            <BaseLogo />
+            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-Base</span>
+            <span className="font-bold leading-tight">Scaffold-ETH</span>
             <span className="text-xs">Ethereum dev stack</span>
           </div>
         </Link>
@@ -110,23 +104,7 @@ export const Header = () => {
       <div className="navbar-end flex-grow mr-4">
         <RainbowKitCustomConnectButton />
         <FaucetButton />
-        <SuperchainFaucetButton />
-        <BaseFaucetsButton />
       </div>
     </div>
-  );
-};
-
-const BaseLogo = () => {
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  const { resolvedTheme } = useTheme();
-  const isDarkMode = resolvedTheme === "dark";
-  return isMounted ? (
-    <Image alt="Base logo" className="cursor-pointer" fill src={`/Base_Symbol_${isDarkMode ? "White" : "Black"}.svg`} />
-  ) : (
-    <div className="w-full h-full rounded-full"></div>
   );
 };
