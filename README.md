@@ -122,7 +122,6 @@ yarn fork
 
 (Now your local Hardhat chain is a fork of Citréa, allowing interaction with forked contracts.)
 
-# <img src="https://github.com/damianmarti/se-2/assets/466652/a795d1f3-980b-4e53-9784-ac53b6dd980e" width="35"> Coinbase Smart Wallet
 
 Coinbase Smart Wallet will automatically activate when `scaffold.config.ts` `targetNetworks` contains ***citreaTest***. For now, [Coinbase beta SDK connector](https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/docs/v4_with_wagmi.md) supports only Citréa testnets.
 
