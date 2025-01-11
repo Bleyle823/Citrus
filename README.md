@@ -1,4 +1,5 @@
 # 🗼️CITRUS 🔵
+# token dployed at : https://explorer.testnet.citrea.xyz/address/0x8eaC377c19f4E01EFd456285d2C016B01331d5DA
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
