@@ -5,7 +5,7 @@
   <a href="https://scaffoldeth.io">Website</a>
 </h4>
 
-Scaffold-RWA is a fork of Scaffold-ETH-2 tailored for real-world asset (RWA) platforms. This fork provides native support for Base and Base Sepolia testnet, integration with asset tokenization protocols, and preconfigured tools for handling cross-chain stablecoins like Ethena. It also features the [coinbase-sdk-wallet](https://github.com/coinbase/coinbase-wallet-sdk/) beta for 4337 account abstraction using passkeys.
+Scaffold-RWA is a fork of Scaffold-ETH-2 tailored for real-world asset (RWA) platforms. This fork provides native support for Citréa testnets, integration with asset tokenization protocols, and preconfigured tools for handling cross-chain stablecoins like Ethena. It also features the [coinbase-sdk-wallet](https://github.com/coinbase/coinbase-wallet-sdk/) beta for 4337 account abstraction using passkeys.
 
 ![Scaffold-RWA](https://github.com/damianmarti/se-2/assets/466652/eac667a7-68fb-4f69-a427-126f7de4114d)
 
@@ -82,29 +82,29 @@ Redeploy your contracts:
 yarn deploy --reset
 ```
 
-# 🔵 Deploy to Base
+# 🔵 Deploy to Citréa
 
-When you are ready to deploy to Base, generate a deployer account: 
+When you are ready to deploy to Citréa, generate a deployer account: 
 
 ```bash
 yarn generate
 ```
 
-Fund the deployer account with ETH on Base at:
+Fund the deployer account with ETH on Citréa at:
 
 ```bash
 yarn account
 ```
 
-Deploy to Base:
+Deploy to Citréa:
 
 ```bash
-yarn deploy --network base 
+yarn deploy --network citrea 
 ```
 
-Set your target network to Base:
+Set your target network to Citréa:
 
-> Change `chains.hardhat` to `chains.base` in `targetNetworks` from `scaffold.config.ts` in `packages/nextjs`.
+> Change `chains.hardhat` to `chains.citrea` in `targetNetworks` from `scaffold.config.ts` in `packages/nextjs`.
 
 Deploy your app to Vercel:
 
@@ -112,7 +112,7 @@ Deploy your app to Vercel:
 yarn vercel:yolo --prod
 ```
 
-# 🕩️ Fork Mainnet Base
+# 🕩️ Fork Mainnet Citréa
 
 > stop your `yarn chain`
 
@@ -120,11 +120,11 @@ yarn vercel:yolo --prod
 yarn fork
 ```
 
-(Now your local Hardhat chain is a fork of Base, allowing interaction with forked contracts.)
+(Now your local Hardhat chain is a fork of Citréa, allowing interaction with forked contracts.)
 
 # <img src="https://github.com/damianmarti/se-2/assets/466652/a795d1f3-980b-4e53-9784-ac53b6dd980e" width="35"> Coinbase Smart Wallet
 
-Coinbase Smart Wallet will automatically activate when `scaffold.config.ts` `targetNetworks` contains ***baseSepolia***. For now, [Coinbase beta SDK connector](https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/docs/v4_with_wagmi.md) supports only Base Sepolia.
+Coinbase Smart Wallet will automatically activate when `scaffold.config.ts` `targetNetworks` contains ***citreaTest***. For now, [Coinbase beta SDK connector](https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/docs/v4_with_wagmi.md) supports only Citréa testnets.
 
 Use [Scaffold-ETH custom hooks](https://docs.scaffoldeth.io/hooks/) or wagmi hooks directly to interact with RWA contracts.
 
