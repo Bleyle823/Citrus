@@ -1,11 +1,11 @@
-# 🗼️GHO-PRO 🔵
+# 🗼️CITRUS 🔵
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
   <a href="https://scaffoldeth.io">Website</a>
 </h4>
 
-GHO-PRO is a blockchain-based lending platform designed to facilitate real estate-backed loans by tokenizing real-world assets (RWAs). This protocol enhances transparency, security, and efficiency through decentralized smart contracts. It allows users to tokenize their assets, set collateral, borrow funds, and seamlessly repay loans.
+CITRUS is a blockchain-based lending platform designed to facilitate real estate-backed loans by tokenizing real-world assets (RWAs). This protocol enhances transparency, security, and efficiency through decentralized smart contracts. It allows users to tokenize their assets, set collateral, borrow funds, and seamlessly repay loans.
 
 ![GHO-PRO](https://github.com/damianmarti/se-2/assets/466652/eac667a7-68fb-4f69-a427-126f7de4114d)
 
@@ -135,24 +135,6 @@ yarn deploy --network citrea
 yarn vercel:yolo --prod
 ```
 
-# Fork Mainnet Citréa
 
-To interact with forked contracts, stop the local network and run:
 
-```bash
-yarn fork
-```
-
-# Coinbase Smart Wallet
-
-Coinbase Smart Wallet activates when `targetNetworks` includes `citreaTest`. Use [Coinbase beta SDK](https://github.com/coinbase/coinbase-wallet-sdk) to integrate wallet interactions with RWA contracts.
-
-# Contributing
-
-See [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for contributing guidelines.
-
-# Resources
-
-- [Scaffold-ETH Docs](https://docs.scaffoldeth.io): Learn to build RWA platforms.
-- [Scaffold-ETH Website](https://scaffoldeth.io): Explore features and use cases.
 
