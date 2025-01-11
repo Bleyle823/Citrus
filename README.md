@@ -7,7 +7,6 @@
 
 Scaffold-RWA is a fork of Scaffold-ETH-2 tailored for real-world asset (RWA) platforms. This fork provides native support for Citréa testnets, integration with asset tokenization protocols, and preconfigured tools for handling cross-chain stablecoins like Ethena. It also features the [coinbase-sdk-wallet](https://github.com/coinbase/coinbase-wallet-sdk/) beta for 4337 account abstraction using passkeys.
 
-![Scaffold-RWA](https://github.com/damianmarti/se-2/assets/466652/eac667a7-68fb-4f69-a427-126f7de4114d)
 
 We highly recommend the Scaffold-ETH-2 docs as the primary guideline for general features.
 
