@@ -127,12 +127,4 @@ Coinbase Smart Wallet will automatically activate when `scaffold.config.ts` `tar
 
 Use [Scaffold-ETH custom hooks](https://docs.scaffoldeth.io/hooks/) or wagmi hooks directly to interact with RWA contracts.
 
-## Documentation
 
-Visit our [docs](https://docs.scaffoldeth.io) for more details on building RWA platforms with Scaffold-ETH 2.
-
-Check out our [website](https://scaffoldeth.io) for additional features.
-
-## Contributing
-
-See [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for guidelines on contributing to Scaffold-ETH 2 and RWA-focused forks.
