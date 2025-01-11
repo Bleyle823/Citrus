@@ -1,42 +1,70 @@
-# 🗼️RWA 🔵
+# 🗼️GHO-PRO 🔵
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
   <a href="https://scaffoldeth.io">Website</a>
 </h4>
 
-Scaffold-RWA is a fork of Scaffold-ETH-2 tailored for real-world asset (RWA) platforms. This fork provides native support for Citréa testnets, integration with asset tokenization protocols, and preconfigured tools for handling cross-chain stablecoins like Ethena. It also features the [coinbase-sdk-wallet](https://github.com/coinbase/coinbase-wallet-sdk/) beta for 4337 account abstraction using passkeys.
+GHO-PRO is a blockchain-based lending platform designed to facilitate real estate-backed loans by tokenizing real-world assets (RWAs). This protocol enhances transparency, security, and efficiency through decentralized smart contracts. It allows users to tokenize their assets, set collateral, borrow funds, and seamlessly repay loans.
 
+![GHO-PRO](https://github.com/damianmarti/se-2/assets/466652/eac667a7-68fb-4f69-a427-126f7de4114d)
 
-We highly recommend the Scaffold-ETH-2 docs as the primary guideline for general features.
+# Key Features
 
-# (forked from 🗼 Scaffold-ETH-2)
+- **Real-World Asset Tokenization**: Transform tangible assets (e.g., real estate, farmland, or precious metals) into digital tokens.
+- **Collateralized Lending**: Secure loans using tokenized assets as collateral.
+- **Oracle Integration**: Provide real-time and accurate asset pricing.
+- **Automated Liquidation**: Protect lenders by liquidating collateral if its value drops below the loan threshold.
+- **Blockchain Transparency**: Ensure all transactions are immutable and traceable.
 
-⚗️ An open-source, up-to-date toolkit for building decentralized applications (dapps) focused on tokenizing and managing real-world assets on the blockchain. It's designed to make it easier for developers to create asset-backed smart contracts and intuitive user interfaces.
+# Tech Stack
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+### Smart Contracts
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapped around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts, including asset tokenization logic.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of RWA-specific components like tokenization forms, asset listings, and yield calculators.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to various wallet providers and interact with the Ethereum network and RWA protocols.
+- **LendingPool.sol**: Manages loan creation, repayment, and liquidation.
+- **RWAOracle.sol**: Handles real-time pricing for tokenized assets.
+- **MockRWAToken.sol**: Simulates tokenized real-world assets.
+  - **Deployed at**: [Lens Testnet Explorer](https://block-explorer.testnet.lens.dev/address/0x8D2F2B42973b07b43eF2126281ab3721aaf88F09)
 
-![Debug Contracts tab](https://github.com/damianmarti/se-2/assets/466652/672d178c-38c9-4c9a-953d-d36acf08f3cd)
+### Frontend
 
-## Requirements
+- Built with **React.js** for a seamless user experience.
+- Styled using **TailwindCSS** for responsive and modern design.
 
-Before you begin, you need to install the following tools:
+### Backend
 
-- [Node (>= v18.17)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+- **Node.js** with **Express.js** for API interactions and server-side logic.
 
-## Quickstart
+### Blockchain
 
-To get started with Scaffold-RWA, follow the steps below:
+- Deployed on the **Lens Protocol** for decentralized asset management.
 
-1. Clone this repo & install dependencies
+### Testing & Deployment
+
+- **Hardhat** and **Mocha** for testing.
+- Deployed to Ethereum-compatible networks using **Hardhat**.
+
+# How It Works
+
+1. **Tokenization**: Users mint tokens representing their assets using `MockRWAToken`.
+2. **Collateralization**: Collateral is approved and held by the `LendingPool` contract.
+3. **Loan Request**: Users borrow funds by providing tokenized assets as collateral. Loan approval depends on collateral value.
+4. **Repayment**: Loan repayment allows users to reclaim their collateral.
+5. **Liquidation**: If collateral value falls below the loan amount, automated liquidation is triggered to protect lenders.
+
+# Quickstart
+
+### Prerequisites
+
+Install the following tools:
+
+- **Node.js (>= v18.18)**
+- **Yarn** (v1 or v2+)
+- **Git**
+
+### Steps to Start
+
+1. Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/BuidlGuidl/scaffold-rwa
@@ -44,86 +72,87 @@ cd scaffold-rwa
 yarn install
 ```
 
-2. Run a local network in the first terminal:
+2. Start a local Ethereum network:
 
 ```bash
 yarn chain
 ```
+This launches a local Hardhat network for development and testing. Customize configurations in `hardhat.config.ts`.
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
-
-3. On a second terminal, deploy the RWA token contract:
+3. Deploy smart contracts to the local network:
 
 ```bash
 yarn deploy
 ```
+Deploy a sample RWA token contract located in `packages/hardhat/contracts`. Adjust deployment scripts in `packages/hardhat/deploy` as needed.
 
-This command deploys a sample RWA token contract to the local network. The contract is located in `packages/hardhat/contracts`. You can modify it to represent specific asset classes like real estate or invoices. The deployment script in `packages/hardhat/deploy` is customizable to suit your needs.
-
-4. On a third terminal, start your NextJS app:
+4. Launch the frontend application:
 
 ```bash
 yarn start
 ```
+Visit the app at `http://localhost:3000`. Use the Asset Dashboard to manage tokenized assets and loans. Configuration can be updated in `packages/nextjs/scaffold.config.ts`.
 
-Visit your app on: `http://localhost:3000`. Use the `Asset Dashboard` page to manage tokenized assets, issue tokens, and monitor yields. Configuration is in `packages/nextjs/scaffold.config.ts`.
+### Additional Commands
 
-**What's next**:
+- **Testing**: Run tests for smart contracts using:
 
-- Edit your asset-backed smart contract `RWAContract.sol` in `packages/hardhat/contracts`.
-- Customize your frontend homepage at `packages/nextjs/app/page.tsx`.
-- Edit deployment scripts in `packages/hardhat/deploy` to include integrations with asset oracle feeds and payment gateways.
-- Add RWA-specific tests in `packages/hardhat/test`. To run tests, use `yarn hardhat:test`.
+```bash
+yarn hardhat:test
+```
 
-Redeploy your contracts:
+- **Redeploy Contracts**: Reset and redeploy contracts:
 
 ```bash
 yarn deploy --reset
 ```
 
-# 🔵 Deploy to Citréa
+# Deployment to Citréa
 
-When you are ready to deploy to Citréa, generate a deployer account: 
+1. Generate a deployer account:
 
 ```bash
 yarn generate
 ```
 
-Fund the deployer account with ETH on Citréa at:
+2. Fund the account with Citréa ETH:
 
 ```bash
 yarn account
 ```
 
-Deploy to Citréa:
+3. Deploy contracts to Citréa:
 
 ```bash
-yarn deploy --network citrea 
+yarn deploy --network citrea
 ```
 
-Set your target network to Citréa:
+4. Update target network in `scaffold.config.ts` to `chains.citrea`.
 
-> Change `chains.hardhat` to `chains.citrea` in `targetNetworks` from `scaffold.config.ts` in `packages/nextjs`.
-
-Deploy your app to Vercel:
+5. Deploy your application to Vercel:
 
 ```bash
 yarn vercel:yolo --prod
 ```
 
-# 🕩️ Fork Mainnet Citréa
+# Fork Mainnet Citréa
 
-> stop your `yarn chain`
+To interact with forked contracts, stop the local network and run:
 
 ```bash
 yarn fork
 ```
 
-(Now your local Hardhat chain is a fork of Citréa, allowing interaction with forked contracts.)
+# Coinbase Smart Wallet
 
+Coinbase Smart Wallet activates when `targetNetworks` includes `citreaTest`. Use [Coinbase beta SDK](https://github.com/coinbase/coinbase-wallet-sdk) to integrate wallet interactions with RWA contracts.
 
-Coinbase Smart Wallet will automatically activate when `scaffold.config.ts` `targetNetworks` contains ***citreaTest***. For now, [Coinbase beta SDK connector](https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/docs/v4_with_wagmi.md) supports only Citréa testnets.
+# Contributing
 
-Use [Scaffold-ETH custom hooks](https://docs.scaffoldeth.io/hooks/) or wagmi hooks directly to interact with RWA contracts.
+See [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for contributing guidelines.
 
+# Resources
+
+- [Scaffold-ETH Docs](https://docs.scaffoldeth.io): Learn to build RWA platforms.
+- [Scaffold-ETH Website](https://scaffoldeth.io): Explore features and use cases.
 
